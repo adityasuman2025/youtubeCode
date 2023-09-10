@@ -14,7 +14,7 @@ const obj = {
         a. BASE CASE of recusion: if length is 1, 
             1. if obj is object: delete obj[thisKey]
             2. if obj is array: obj.splice(thisKey, 1)
-        b. if its length is > 1, omit(obj[thiskey], pathArr.slice(1))
+        b. if its length is > 1, then check if thisKey exists in obj or not, if it exists then will run our function recursively, omit(obj[thiskey], pathArr.slice(1))
 */
 function omit(obj, path) {
     let pathArr = Array.isArray(path) ? path : path.replace("[", ".").replace("]", "").split(".");
@@ -26,11 +26,12 @@ function omit(obj, path) {
         if (Array.isArray(obj)) obj.splice(thisKey, 1);
         else delete obj[thisKey];
     } else {
-        omit(obj[thisKey], pathArr.slice(1));
+        if (obj.hasOwnProperty(thisKey)) omit(obj[thisKey], pathArr.slice(1));
     }
 }
 
-omit(obj, "a");
+omit(obj, "a.d.e");
+// omit(obj, "a");
 // omit(obj, "a.b.d");
 // omit(obj, "a.b.c[1]");
 console.log("obj", JSON.stringify(obj));
