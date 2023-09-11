@@ -58,9 +58,11 @@ function camelCase(str) {
         return res;
     }
 }
+// const ans = camelCase(str4);
+// console.log("ans", ans)
 
-const ans = camelCase(str4);
-console.log("ans", ans)
+
+
 
 let obj = {
     [str0]: "1",
@@ -111,9 +113,41 @@ let obj4 = {
     3: 3
 }
 
-function camelizeObject(obj) {
 
+/*
+    LOGIC
+    1. check obj is array or object
+        a. if obj is array ->  newObj: []
+        b. if obj is object ->  newObj: {}
+    2. loop though all the keys of the obj
+    3. will check the value of that key
+        1. if the value is object,
+            then obj[camelKey] = camelizeObject(obj[key]);
+        2. obj[camelKey] = obj[key];, obj[key] is value
+    4. return newObj
+*/
+function camelizeObject(obj) {
+    let newObj;
+    if (typeof obj === "object") {
+        newObj = {};
+        if (Array.isArray(obj)) newObj = [];
+    } else {
+        return obj;
+    }
+
+    Object.keys(obj).forEach((key) => {
+        const val = obj[key];
+        const camelKey = camelCase(key);
+        if (typeof val === "object") {
+            newObj[camelKey] = camelizeObject(val);
+        } else {
+            newObj[camelKey] = val;
+        }
+    });
+
+    return newObj;
 }
 
-// const res = camelizeObject(obj);
-// console.log("res", JSON.stringify(res))
+const res = camelizeObject(obj4);
+console.log("obj", (obj4))
+console.log("res", (res))
