@@ -1,7 +1,7 @@
 const obj = {
     a: {
         b: {
-            c: [1, 2, 3]
+            c: [[0, 100], 2, 3]
         }
     }
 };
@@ -17,7 +17,11 @@ const obj = {
 */
 
 function get(obj, path, defaultVal) {
-    let pathArr = Array.isArray(path) ? path : path.replace("[", ".").replace("]", "").split(".");
+    /*
+        In replace function, if pattern (1st parameter) is a string, then only the first occurrence will be replaced
+        to replace all occurances of the pattern, we need to use a regex (regular expression) with g flag
+    */
+    let pathArr = Array.isArray(path) ? path : path.replace(/\[/g, ".").replace(/\]/g, "").split(".");
 
     let thisKey = pathArr[0];
 
@@ -33,13 +37,13 @@ function get(obj, path, defaultVal) {
 }
 
 
-// const ans = get(obj, "a.b.c[2]", "DNE");
-const ans = get(obj, ["a", "b", "c", "2"], "DNE");
+const ans = get(obj, "a.b.c[0][1]", "DNE"); // 100
+// const ans = get(obj, ["a", "b", "c", "2"], "DNE");
 console.log("ans", ans);
 
 
 // get(obj, 'a.b.c'); // [1,2,3]
-// get(obj, 'a.b.c.0'); // 1
+// get(obj, 'a.b.c.0'); // [0, 100]
 // get(obj, 'a.b.c[1]'); // 2
 // get(obj, [a, b, c, 1]); // 2
 

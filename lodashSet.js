@@ -28,7 +28,11 @@ const obj = {
 */
 
 function set(obj, path, value) {
-    const pathArray = Array.isArray(path) ? path : path.replace("[", ".").replace("]", "").split(".");
+    /*
+        In replace function, if pattern (1st parameter) is a string, then only the first occurrence will be replaced
+        to replace all occurances of the pattern, we need to use a regex (regular expression) with g flag
+    */
+    const pathArray = Array.isArray(path) ? path : path.replace(/\[/g, ".").replace(/\]/g, "").split(".");
 
     const thisKey = pathArray[0]; // "4" 4 //"c"
     const nextKey = pathArray[1];
@@ -47,7 +51,7 @@ function set(obj, path, value) {
 
 
 set(obj, 'c.b.a', 'Hi');
-set(obj, 'a.b.c[4]', 'Hello');
+set(obj, 'a.b.c[4][0]', 'Hello');
 // set(obj, 'a.c.d.01.e.0.f', 'Bye');
 console.log("obj", JSON.stringify(obj));
 

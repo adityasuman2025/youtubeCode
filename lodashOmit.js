@@ -1,7 +1,7 @@
 const obj = {
     a: {
         b: {
-            c: [1, 2, 3]
+            c: [1, [21, 22], 3]
         }
     }
 };
@@ -19,7 +19,11 @@ const obj = {
             2. do nothing
 */
 function omit(obj, path) {
-    let pathArr = Array.isArray(path) ? path : path.replace("[", ".").replace("]", "").split(".");
+    /*
+        In replace function, if pattern (1st parameter) is a string, then only the first occurrence will be replaced
+        to replace all occurances of the pattern, we need to use a regex (regular expression) with g flag
+    */
+    let pathArr = Array.isArray(path) ? path : path.replace(/\[/g, ".").replace(/\]/g, "").split(".");
 
     let thisKey = Number(pathArr[0]) || pathArr[0];
 
@@ -34,8 +38,8 @@ function omit(obj, path) {
     }
 }
 
-omit(obj, "a.d.e");
+// omit(obj, "a.d.e");
 // omit(obj, "a");
 // omit(obj, "a.b.d");
-// omit(obj, "a.b.c[1]");
+omit(obj, "a.b.c[1][1]");
 console.log("obj", JSON.stringify(obj));
