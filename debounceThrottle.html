@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debouce & Throttle</title>
+
+    <style>
+        #content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 50px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #input {
+            width: 400px;
+            height: 40px;
+        }
+
+        #button {
+            width: 100px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <input type="text" id="input" />
+        <br /><br />
+
+        <button id="button">shoot</button>
+    </div>
+
+
+    <script src="debounceThrottle.js"></script>
+</body>
+
+</html>
